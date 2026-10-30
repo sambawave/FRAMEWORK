@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "id": "2f452887-f1b3-4b41-b462-218454fcafd9",
+  "name": "Creative 2.4 \u2014 3D & Text",
+  "width": 1280,
+  "height": 720,
+  "fps": {
+    "num": 30,
+    "den": 1
+  },
+  "background": "#151517",
+  "createdAt": "2026-10-29T00:09:11.631Z",
+  "tracks": [
+    {
+      "id": "creative-title",
+      "name": "Animated Title",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false,
+      "color": "#ac76cf"
+    },
+    {
+      "id": "creative-3d",
+      "name": "GPU 3D Torus",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false,
+      "color": "#d7a662"
+    },
+    {
+      "id": "V3",
+      "name": "VIDEO 3",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "V2",
+      "name": "VIDEO 2",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "V1",
+      "name": "VIDEO 1",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "A1",
+      "name": "AUDIO 1",
+      "kind": "audio",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "A2",
+      "name": "AUDIO 2",
+      "kind": "audio",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    }
+  ],
+  "clips": [
+    {
+      "id": "8fa469ea-ec61-4192-b05f-254dc6aef0ce",
+      "name": "Backdrop",
+      "kind": "solid",
+      "trackId": "V3",
+      "start": 0,
+      "duration": 180,
+      "sourceStart": 0,
+      "transform": {
+        "x": 0,
+        "y": 0,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "scaleX": 1,
+        "scaleY": 1
+      },
+      "volume": 1,
+      "pan": 0,
+      "blend": "normal",
+      "effects": [],
+      "keyframes": {},
+      "color": "#111822",
+      "fadeIn": 0,
+      "fadeOut": 0
+    },
+    {
+      "id": "0cf48cdc-b711-446a-9f7a-1e827db4f54d",
+      "name": "Spinning Torus",
+      "kind": "3d",
+      "trackId": "creative-3d",
+      "start": 0,
+      "duration": 180,
+      "sourceStart": 0,
+      "transform": {
+        "x": 0,
+        "y": -40,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "scaleX": 1,
+        "scaleY": 1
+      },
+      "volume": 1,
+      "pan": 0,
+      "blend": "normal",
+      "effects": [],
+      "keyframes": {
+        "rotationY": [
+          {
+            "frame": 0,
+            "value": 0,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 179,
+            "value": 360,
+            "ease": "linear"
+          }
+        ],
+        "lighting": [
+          {
+            "frame": 0,
+            "value": 0.7,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 95,
+            "value": 1.4,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 179,
+            "value": 0.7,
+            "ease": "linear"
+          }
+        ]
+      },
+      "color": "#e6a14a",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "three": {
+        "primitive": "torus",
+        "rotationX": 20,
+        "rotationY": 0,
+        "rotationZ": 0,
+        "depth": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "scaleZ": 1,
+        "roughness": 0.28,
+        "metalness": 0.65,
+        "emissive": "#1b0e00",
+        "wireframe": false,
+        "lighting": 1
+      }
+    },
+    {
+      "id": "d7e34068-37a0-4e85-a42e-994516164925",
+      "name": "Character Cascade",
+      "kind": "text",
+      "trackId": "creative-title",
+      "start": 0,
+      "duration": 180,
+      "sourceStart": 0,
+      "transform": {
+        "x": 0,
+        "y": 235,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1,
+        "scaleX": 1,
+        "scaleY": 1
+      },
+      "volume": 1,
+      "pan": 0,
+      "blend": "normal",
+      "effects": [
+        {
+          "id": "4b174b55-e2d1-4207-885d-945ed08dff49",
+          "type": "glow",
+          "amount": 5,
+          "enabled": true
+        }
+      ],
+      "keyframes": {
+        "opacity": [
+          {
+            "frame": 0,
+            "value": 0,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 40,
+            "value": 1,
+            "ease": "linear"
+          },
+          {
+            "frame": 145,
+            "value": 1,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 179,
+            "value": 0,
+            "ease": "linear"
+          }
+        ]
+      },
+      "color": "#ffffff",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "text": "FRAMEWORK",
+      "fontSize": 95,
+      "fontFamily": "Arial",
+      "fontWeight": "700",
+      "textAnimation": {
+        "mode": "cascade",
+        "duration": 45,
+        "delay": 4,
+        "intensity": 100,
+        "loop": false
+      },
+      "characters": {
+        "0": {
+          "color": "#e6a14a"
+        }
+      }
+    }
+  ],
+  "assets": [],
+  "durationFrames": 180
+}

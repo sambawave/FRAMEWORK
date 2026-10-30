@@ -1,0 +1,192 @@
+/* FRAMEWORK 2.7 — semantic, theme-aware UI refinement. No media-frame filters.
+   Default palette is unchanged in the project schema; UI finish follows the user reference. */
+:root{
+ --fw-bg:#17181a;--fw-panel:#252629;--fw-surface:#35363a;
+ --fw-raised:#35363a;--fw-recessed:#1b1c1e;
+ --fw-button:#35363a;--fw-button-top:#55565a;--fw-button-bottom:#292a2c;
+ --fw-text:#e3e3e5;--fw-muted:#a2a4aa;--fw-subtle:#93969c;
+ --fw-border:#101113;--fw-border-strong:#090a0c;
+ --fw-shadow:#0000008a;--fw-accent:#e6a14a;--fw-selected:#d9d0ff;
+ --fw-menu:#252629;--fw-input:#1f2022;--fw-input-border:#131415;
+ --fw-timeline:#15161a;--fw-track:#1b1d23;--fw-layer:#282a32;
+ --fw-ruler:#20232b;--fw-clip:#363e66;--fw-playhead:#c9a8fc;
+ --fw-marker:#f2b158;--fw-timeline-toolbar:#25262b;
+ --fw-radius:6px;--fw-touch:32px;
+}
+:root, body, #root{color:var(--fw-text);background:var(--fw-bg)}
+.app-shell,.home-screen{color:var(--fw-text);background:var(--fw-bg)!important}
+/* Restrained physical depth: surfaces are matte; controls, not entire panels, are tactile. */
+.app-shell .pane,.app-shell .media-panel,.app-shell .inspector,.app-shell .timeline,.app-shell .viewer{
+ background:var(--fw-panel)!important;color:var(--fw-text);border-color:var(--fw-border-strong);
+ box-shadow:inset 0 1px 0 color-mix(in srgb,var(--fw-text) 7%,transparent);
+}
+.app-shell .panel-title,.app-shell .desktop-menubar,.app-shell .app-header,
+.app-shell .timeline-header,.app-shell .viewer-toolbar,.app-shell .status-bar{
+ background:var(--fw-surface)!important;color:var(--fw-text);border-color:var(--fw-border-strong);
+ box-shadow:inset 0 1px 0 color-mix(in srgb,var(--fw-text) 10%,transparent),inset 0 -1px 0 var(--fw-border-strong);
+}
+.app-shell .panel-title{min-height:37px;font-size:11px;letter-spacing:.55px;font-weight:650;padding-inline:12px}
+.app-shell .inspector .panel-title,.app-shell .media-panel .panel-title{font-size:11px}
+.app-shell .panel-tabs{background:var(--fw-recessed);border-color:var(--fw-border)}
+.app-shell .panel-tabs button{color:var(--fw-muted);font-size:11px}
+.app-shell .panel-tabs button.active{color:var(--fw-text);background:var(--fw-surface);border-bottom-color:var(--fw-accent)}
+.app-shell .small-dim,.app-shell .hint,.app-shell .section-note{color:var(--fw-muted)}
+.app-shell .toolbar-group,.app-shell .toolstrip,.app-shell .playback-buttons,.app-shell .timeline-actions{
+ gap:5px;align-items:center;
+}
+/* Matte physical buttons. Flat rows and menu items intentionally stay flat for density. */
+.app-shell .app-header button:not(.export-top),.app-shell .toolstrip button,
+.app-shell .timeline-header button,.app-shell .viewer-toolbar button,
+.app-shell .inspector button:not(.diamond):not(.context-menu button),
+.app-shell .panel-tools button,.shortcut-window button,.dialog-footer button,
+.app-shell .desktop-menu>button,.theme-manager button:not(.theme-color-row),
+.export-dialog button,.help-dialog button{
+ color:var(--fw-text);border:1.5px solid var(--fw-border-strong)!important;
+ border-top-color:color-mix(in srgb,var(--fw-button-top) 70%,var(--fw-border-strong))!important;
+ border-radius:var(--fw-radius);text-shadow:none;
+ background:linear-gradient(180deg,color-mix(in srgb,var(--fw-button) 87%,var(--fw-button-top)) 0%,var(--fw-button) 55%,var(--fw-button-bottom) 100%)!important;
+ box-shadow:inset 0 1px 0 color-mix(in srgb,var(--fw-text) 13%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--fw-border-strong) 66%,transparent),0 2px 0 var(--fw-border-strong),0 3px 5px var(--fw-shadow)!important;
+ transition:transform 115ms ease-out,box-shadow 115ms ease-out,filter 115ms ease-out;
+}
+.app-shell button:not(:disabled):hover,.theme-manager button:not(:disabled):hover{filter:brightness(1.08)}
+.app-shell .app-header button:not(:disabled):active,.app-shell .toolstrip button:not(:disabled):active,
+.app-shell .timeline-header button:not(:disabled):active,.app-shell .viewer-toolbar button:not(:disabled):active,
+.app-shell .inspector button:not(:disabled):active,.shortcut-window button:not(:disabled):active,
+.theme-manager button:not(:disabled):active{
+ transform:translateY(2px);box-shadow:inset 0 3px 6px var(--fw-shadow),inset 0 1px 0 color-mix(in srgb,var(--fw-text) 7%,transparent),0 1px 0 var(--fw-border-strong)!important;
+}
+/* Both aria state and existing .active classes derive from the application's real state. */
+.app-shell button.active,.app-shell button[aria-pressed='true'],.app-shell .workspace-switcher .current{
+ color:var(--fw-text)!important;
+ background:linear-gradient(180deg,color-mix(in srgb,var(--fw-accent) 75%,#252525),color-mix(in srgb,var(--fw-accent) 45%,var(--fw-button-bottom)))!important;
+ border-top-color:var(--fw-accent)!important;
+ box-shadow:inset 0 2px 5px var(--fw-shadow),0 1px 0 var(--fw-border-strong)!important;
+}
+/* Menus have separate surface treatment, no enormous bevel for each row. */
+.context-menu,.desktop-dropdown,.layer-create-menu,.shape-popup,.effect-menu{
+ background:var(--fw-menu)!important;color:var(--fw-text)!important;
+ border:1.5px solid var(--fw-border-strong)!important;border-radius:8px!important;
+ box-shadow:inset 0 1px 0 color-mix(in srgb,var(--fw-text) 10%,transparent),0 12px 30px var(--fw-shadow)!important;
+ animation:framework-popup 125ms cubic-bezier(.22,1,.36,1);z-index:7000!important;
+}
+.context-menu{position:fixed!important;min-width:205px;max-width:min(330px,calc(100vw - 12px));max-height:calc(100dvh - 14px);overflow-y:auto;overscroll-behavior:contain}
+.context-menu button,.desktop-dropdown button,.layer-create-menu button,.shape-popup button,.effect-menu button{
+ display:flex;align-items:center;justify-content:space-between;width:100%;min-height:31px;
+ border:0!important;border-radius:4px;color:var(--fw-text)!important;background:transparent!important;
+ box-shadow:none!important;text-shadow:none!important;font-size:11px;text-align:left;padding:7px 10px;
+ transform:none!important;
+}
+.context-menu button:hover:not(:disabled),.desktop-dropdown button:hover:not(:disabled),
+.layer-create-menu button:hover:not(:disabled),.shape-popup button:hover:not(:disabled),.effect-menu button:hover:not(:disabled){
+ color:var(--fw-text)!important;background:color-mix(in srgb,var(--fw-accent) 16%,var(--fw-panel))!important;
+}
+.context-menu button:disabled,.desktop-dropdown button:disabled{color:var(--fw-subtle)!important;opacity:.58}
+.context-menu .danger{color:#e5877d!important}
+/* Legacy theme filter on panels creates fixed-position clipping and makes Light unreadable. */
+:root[data-framework-theme] .media-panel,:root[data-framework-theme] .inspector,:root[data-framework-theme] .timeline,
+:root[data-framework-theme] .desktop-menubar,:root[data-framework-theme] .app-header,
+:root[data-framework-theme] .panel-title,:root[data-framework-theme] .timeline-header{filter:none!important}
+.app-shell .media-item,.app-shell .effect-library-item{color:var(--fw-text);border-color:var(--fw-border)}
+.app-shell .media-item:hover,.app-shell .effect-library-item:hover{background:color-mix(in srgb,var(--fw-surface) 65%,var(--fw-panel))}
+.app-shell .media-item.selected{background:color-mix(in srgb,var(--fw-accent) 15%,var(--fw-panel))}
+.app-shell .media-thumb{background:var(--fw-recessed);border-color:var(--fw-border)}
+.app-shell .media-item small,.app-shell .effect-library-item small,.app-shell .section-caption{color:var(--fw-muted)}
+/* Inspector: deliberate hierarchy, less cramped property inputs, adjustable-width parent is retained. */
+.inspector-filter{display:flex;align-items:center;position:sticky;top:0;z-index:7;
+ gap:6px;padding:9px 10px;background:var(--fw-panel);border-bottom:1px solid var(--fw-border)}
+.inspector-filter input{min-width:0;flex:1;height:29px!important;color:var(--fw-text)!important;background:var(--fw-input)!important;border:1px solid var(--fw-input-border)!important;padding-inline:8px!important}
+.inspector-filter button{height:28px;min-width:28px;display:grid;place-items:center;padding:4px!important}
+.inspector-section{padding:12px 10px!important;border-top:1px solid var(--fw-border)!important;color:var(--fw-text)}
+.inspector-section>h4{cursor:pointer;user-select:none;color:var(--fw-muted)!important;font-size:11px!important;
+ font-weight:700;letter-spacing:.55px;margin:0 0 11px;min-height:21px;gap:5px}
+.inspector-section>h4::before{content:'⌄';font-size:15px;color:var(--fw-accent);margin-right:5px;line-height:1}
+.inspector-section.is-collapsed>h4{margin-bottom:0}.inspector-section.is-collapsed>h4::before{content:'›'}
+.inspector-section.is-collapsed>:not(h4){display:none!important}
+.inspector-section[hidden]{display:none!important}
+.inspector .field{color:var(--fw-muted);min-height:33px;font-size:11px;gap:7px}
+.inspector .anim-row{min-height:38px;gap:3px}.inspector .anim-row>button{min-width:26px;min-height:27px;padding:5px!important}
+.inspector .diamond.on{color:var(--fw-accent)}
+.inspector .pro-slider-label{color:var(--fw-muted);font-size:11px}
+.inspector .pro-slider-row{grid-template-columns:minmax(67px,90px) minmax(36px,1fr) 62px 18px;gap:5px;min-height:36px}
+.inspector .effect-control,.audio-effect-panel,.motion-config{background:var(--fw-recessed);border-color:var(--fw-border)!important;color:var(--fw-text)}
+.inspector .effect-control-head strong{font-size:11px}
+.inspector .clip-heading{padding:12px}.inspector .clip-badge{color:var(--fw-accent);background:var(--fw-recessed)}
+.app-shell input:not([type='range']):not([type='color']):not([type='checkbox']),
+.app-shell textarea,.app-shell select,.shortcut-window input,
+.export-dialog input,.export-dialog select,.theme-picker input{
+ color:var(--fw-text)!important;background:var(--fw-input)!important;border:1px solid var(--fw-input-border)!important;
+ box-shadow:inset 0 1px 3px color-mix(in srgb,var(--fw-shadow) 65%,transparent)!important;border-radius:4px;
+}
+.app-shell input::placeholder{color:var(--fw-subtle)}
+.app-shell .pro-slider-row input[type=range]{background:transparent}
+.app-shell input[type=range]::-webkit-slider-runnable-track{background:var(--fw-recessed);border:1px solid var(--fw-border-strong);box-shadow:inset 0 2px 3px var(--fw-shadow)}
+.app-shell input[type=range]::-webkit-slider-thumb{background:linear-gradient(160deg,var(--fw-button-top),var(--fw-button),var(--fw-button-bottom));border:1px solid var(--fw-border-strong);box-shadow:inset 0 1px color-mix(in srgb,var(--fw-text) 30%,transparent),0 2px 4px var(--fw-shadow)}
+/* Timeline keeps its actual geometry, hit regions and data-driven clip colors. */
+.timeline-scroll{background:var(--fw-timeline)!important}
+.track-lane{background:var(--fw-track)!important;border-color:var(--fw-border)!important}
+.track-label{background:var(--fw-layer)!important;color:var(--fw-text)!important;border-bottom-color:var(--fw-border)!important}
+.ruler-row,.ruler-lane,.ruler-title{background:var(--fw-ruler)!important;color:var(--fw-text)!important}
+.ruler-tick,.track-id,.timeline-blank{color:var(--fw-muted)!important}
+.timeline-header{background:var(--fw-timeline-toolbar)!important}
+.timeline-clip{box-shadow:inset 0 1px 0 #ffffff18,0 1px 3px #0005;border-radius:4px!important}
+.timeline-clip.clip-selected{outline:2px solid var(--fw-selected)!important}
+.playhead-line,.playhead-head{background:var(--fw-playhead)!important}
+.timeline-marker{border-top-color:var(--fw-marker)!important}
+.timeline-marker-guide{background:var(--fw-marker)!important}
+.app-shell .track-label.selected-layer{background:color-mix(in srgb,var(--fw-accent) 17%,var(--fw-layer))!important}
+/* A floating dialog is not inside .app-shell; themes must cover portals too. */
+.theme-manager,.theme-picker,.shortcut-window,.export-dialog,.help-dialog,.attribute-dialog,
+.dialog-backdrop>div,.home-dialog,.home-modal{
+ background:var(--fw-panel)!important;color:var(--fw-text)!important;border-color:var(--fw-border)!important;
+}
+.theme-manager-head,.theme-manager-footer,.dialog-title,.dialog-footer,.shortcut-window header,
+.shortcut-window footer{background:var(--fw-surface)!important;color:var(--fw-text)!important;border-color:var(--fw-border)!important}
+.theme-manager h4,.theme-manager-head small,.theme-manager-footer span,.dialog-content .hint,.shortcut-item small{color:var(--fw-muted)!important}
+.theme-color-row,.theme-card,.theme-actions button,.theme-picker footer button{color:var(--fw-text)!important;background:var(--fw-surface)!important;border-color:var(--fw-border)!important}
+.theme-card-label,.theme-color-row code,.theme-picker label,.shortcut-item b,.shortcut-window header{color:var(--fw-text)!important}
+.theme-picker-wheel:before{background:var(--fw-panel)}
+.theme-picker input,.theme-manager input,.shortcut-window input{color:var(--fw-text)!important;background:var(--fw-input)!important;border-color:var(--fw-input-border)!important}
+.export-grid,.export-grid label,.export-grid strong,.export-title,.export-info,.dialog-content{color:var(--fw-text)!important}
+/* FL Studio/Blender-inspired workspace tabs occupy no new row, preserving layout. */
+.workspace-switcher{display:flex;gap:1px;margin-left:auto;padding-inline:6px;min-width:0;overflow-x:auto;scrollbar-width:thin;align-self:stretch;align-items:center}
+.app-shell .desktop-menubar .workspace-switcher button{
+ flex:0 0 auto;min-height:26px;padding:5px 8px;border:0!important;border-bottom:2px solid transparent!important;
+ border-radius:3px 3px 0 0;color:var(--fw-muted)!important;background:transparent!important;
+ box-shadow:none!important;font-size:10px;transform:none!important;
+}
+.app-shell .desktop-menubar .workspace-switcher button:hover{color:var(--fw-text)!important;background:color-mix(in srgb,var(--fw-button) 85%,var(--fw-panel))!important}
+.app-shell .desktop-menubar .workspace-switcher button.current{color:var(--fw-text)!important;border-bottom-color:var(--fw-accent)!important;background:var(--fw-recessed)!important}
+/* Light theme: all text and icons use dark semantic values; NEVER inherit charcoal popups. */
+:root[data-framework-theme='light'] .app-shell,:root[data-framework-theme='light'] .home-screen,
+:root[data-framework-theme='light'] .theme-manager,:root[data-framework-theme='light'] .shortcut-window{color:var(--fw-text)!important}
+:root[data-framework-theme='light'] .app-shell button:not(.export-top):not(.primary-btn),
+:root[data-framework-theme='light'] .app-shell svg,
+:root[data-framework-theme='light'] .desktop-dropdown svg,
+:root[data-framework-theme='light'] .context-menu svg{color:inherit}
+:root[data-framework-theme='light'] .context-menu,:root[data-framework-theme='light'] .desktop-dropdown,
+:root[data-framework-theme='light'] .layer-create-menu,:root[data-framework-theme='light'] .shape-popup,
+:root[data-framework-theme='light'] .effect-menu{background:var(--fw-menu)!important;color:var(--fw-text)!important}
+:root[data-framework-theme='light'] .context-menu button,:root[data-framework-theme='light'] .desktop-dropdown button,
+:root[data-framework-theme='light'] .layer-create-menu button,:root[data-framework-theme='light'] .shape-popup button,
+:root[data-framework-theme='light'] .effect-menu button{color:var(--fw-text)!important}
+:root[data-framework-theme='light'] .context-menu button:hover,:root[data-framework-theme='light'] .desktop-dropdown button:hover{background:#d7dade!important}
+:root[data-framework-theme='light'] .app-shell .small-dim,:root[data-framework-theme='light'] .hint,
+:root[data-framework-theme='light'] .panel-tabs button,:root[data-framework-theme='light'] .inspector .field{color:var(--fw-muted)!important}
+:root[data-framework-theme='light'] .timeline-clip .clip-name{color:#fff!important}
+:root[data-framework-theme='light'] .viewer-stage{background:#202226!important}
+:root[data-framework-theme='light'] .app-shell .app-header button:not(.export-top),
+:root[data-framework-theme='light'] .app-shell .timeline-header button,
+:root[data-framework-theme='light'] .app-shell .viewer-toolbar button,
+:root[data-framework-theme='light'] .app-shell .inspector button{
+ color:var(--fw-text)!important;text-shadow:none!important;
+}
+/* Dense layout remains accessible on narrow screens. */
+@media(max-width:1150px){.workspace-switcher{max-width:42vw}.app-shell .desktop-menubar .workspace-switcher button{padding-inline:7px;font-size:10px}}
+@media(max-width:900px){.workspace-switcher{max-width:none;margin-left:8px}.app-shell .desktop-menubar{overflow-x:auto}.app-shell .inspector-filter button{min-width:34px;height:34px}}
+@media(prefers-reduced-motion:reduce){.app-shell button,.context-menu,.desktop-dropdown,.theme-manager,.theme-picker,.shortcut-window{transition:none!important;animation:none!important}}
+/* Section titles align at the start; genuine action controls remain at the end. */
+.inspector-section>h4{justify-content:flex-start!important}
+.inspector-section>h4>button,.inspector-section>h4>.section-note{margin-left:auto}
+
+.context-submenu{z-index:7101!important;min-width:205px;max-width:min(235px,calc(100vw - 12px));max-height:calc(100dvh - 12px);overflow-y:auto}
+.context-menu button.has-children::after{content:'›';margin-left:18px;color:var(--fw-accent);font-size:17px;line-height:10px}

@@ -1,0 +1,47 @@
+{
+  "name": "framework-video-editor",
+  "private": true,
+  "version": "2.7.0-design-repair-rc",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "deploy": "gh-pages -d dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:unit": "vitest run tests/core.test.ts tests/upgrade.test.ts tests/pro.test.ts tests/final.test.ts tests/release.test.ts",
+    "verify:final": "node tools/verify-core.cjs && node tools/verify-upgrade.cjs && node tools/verify-pro.cjs && node tools/verify-final.cjs && node tools/verify-release.cjs && node tools/verify-creative.cjs && node tools/verify-25.cjs",
+    "verify:offline": "npm run verify:final",
+    "verify:browser:25": "node tools/build-browser-engine.cjs /tmp/framework-browser-test && python tools/verify-25-browser.py",
+    "verify:audit:offline": "npm run verify:offline && node tools/verify-audit.cjs && node tools/verify-audit-static.cjs && node tools/verify-store-audit.cjs",
+    "verify:audit:browser": "node tools/build-browser-engine.cjs /tmp/framework-browser-test && python tools/verify-audit-browser.py",
+    "verify:audit:engine-types": "tsc -p tsconfig.audit.json",
+    "verify:workspace": "npm run verify:audit:offline && node tools/verify-26.cjs",
+    "verify:workspace:browser": "node tools/build-browser-engine.cjs /tmp/framework-browser-test && python tools/verify-audit-browser.py && python tools/verify-26-browser.py",
+    "verify:design:27": "node tools/verify-27.cjs",
+    "verify:visual:27": "python tools/verify-27-browser.py",
+    "verify:release:27": "npm run verify:workspace && npm run verify:design:27"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.180.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.180.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "gh-pages": "^6.3.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vitest": "^3.0.5"
+  }
+}

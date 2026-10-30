@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "id": "framework-example-001",
+  "name": "FRAMEWORK • Animated Intro",
+  "width": 1280,
+  "height": 720,
+  "fps": {
+    "num": 30,
+    "den": 1
+  },
+  "background": "#000000",
+  "createdAt": "2026-10-29T00:09:11.631Z",
+  "tracks": [
+    {
+      "id": "V3",
+      "name": "VIDEO 3",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "V2",
+      "name": "VIDEO 2",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "V1",
+      "name": "VIDEO 1",
+      "kind": "video",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "A1",
+      "name": "AUDIO 1",
+      "kind": "audio",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    },
+    {
+      "id": "A2",
+      "name": "AUDIO 2",
+      "kind": "audio",
+      "muted": false,
+      "locked": false,
+      "hidden": false
+    }
+  ],
+  "clips": [
+    {
+      "id": "7a33c96f-a858-4c0f-a798-ab7e4a3ce899",
+      "name": "Background",
+      "kind": "solid",
+      "trackId": "V1",
+      "start": 0,
+      "duration": 180,
+      "sourceStart": 0,
+      "transform": {
+        "x": 0,
+        "y": 0,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "volume": 1,
+      "pan": 0,
+      "blend": "normal",
+      "effects": [],
+      "keyframes": {},
+      "text": "Your text here",
+      "fontSize": 86,
+      "fontFamily": "Arial",
+      "fontWeight": "700",
+      "color": "#121629",
+      "shape": "rectangle",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "mask": "none"
+    },
+    {
+      "id": "c6ed9067-706a-4319-98d7-233a5c5dff66",
+      "name": "Violet Sun",
+      "kind": "shape",
+      "trackId": "V2",
+      "start": 0,
+      "duration": 180,
+      "sourceStart": 0,
+      "transform": {
+        "x": -310,
+        "y": 75,
+        "scale": 1.75,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "volume": 1,
+      "pan": 0,
+      "blend": "normal",
+      "effects": [
+        {
+          "id": "example-blur",
+          "type": "blur",
+          "amount": 9,
+          "enabled": true
+        }
+      ],
+      "keyframes": {
+        "rotation": [
+          {
+            "frame": 0,
+            "value": -20,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 179,
+            "value": 25,
+            "ease": "easeInOut"
+          }
+        ],
+        "opacity": [
+          {
+            "frame": 0,
+            "value": 0,
+            "ease": "linear"
+          },
+          {
+            "frame": 45,
+            "value": 1,
+            "ease": "easeOut"
+          },
+          {
+            "frame": 155,
+            "value": 1,
+            "ease": "linear"
+          },
+          {
+            "frame": 179,
+            "value": 0,
+            "ease": "easeIn"
+          }
+        ]
+      },
+      "text": "Your text here",
+      "fontSize": 86,
+      "fontFamily": "Arial",
+      "fontWeight": "700",
+      "color": "#635be0",
+      "shape": "ellipse",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "mask": "none"
+    },
+    {
+      "id": "c31b6d62-dda3-4987-96c1-bb38c09c6f52",
+      "name": "Animated Logo",
+      "kind": "text",
+      "trackId": "V3",
+      "start": 0,
+      "duration": 180,
+      "sourceStart": 0,
+      "transform": {
+        "x": 40,
+        "y": 0,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "volume": 1,
+      "pan": 0,
+      "blend": "normal",
+      "effects": [],
+      "keyframes": {
+        "x": [
+          {
+            "frame": 0,
+            "value": 650,
+            "ease": "easeOut"
+          },
+          {
+            "frame": 45,
+            "value": 40,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 155,
+            "value": 40,
+            "ease": "easeInOut"
+          },
+          {
+            "frame": 179,
+            "value": -650,
+            "ease": "linear"
+          }
+        ],
+        "opacity": [
+          {
+            "frame": 0,
+            "value": 0,
+            "ease": "linear"
+          },
+          {
+            "frame": 20,
+            "value": 1,
+            "ease": "easeOut"
+          },
+          {
+            "frame": 160,
+            "value": 1,
+            "ease": "linear"
+          },
+          {
+            "frame": 179,
+            "value": 0,
+            "ease": "linear"
+          }
+        ]
+      },
+      "text": "FRAMEWORK",
+      "fontSize": 106,
+      "fontFamily": "Arial",
+      "fontWeight": "700",
+      "color": "#ffffff",
+      "shape": "rectangle",
+      "fadeIn": 0,
+      "fadeOut": 0,
+      "mask": "none"
+    }
+  ],
+  "assets": []
+}

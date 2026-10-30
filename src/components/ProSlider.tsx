@@ -1,0 +1,13 @@
+import {useEffect,useRef,useState} from 'react';
+/** Numeric entry is deliberately text-based so intermediate '-' and decimal edits work. */
+export function ProSlider({label,value,onChange,min=0,max=100,step=1,defaultValue,unit='',disabled=false,onGestureStart,onGestureEnd}: {label:string;value:number;onChange:(n:number)=>void;min?:number;max?:number;step?:number;defaultValue?:number;unit?:string;disabled?:boolean;onGestureStart?:()=>void;onGestureEnd?:()=>void}){
+ const [draft,setDraft]=useState(String(Number.isFinite(value)?Number(value.toFixed(4)):0)),[editing,setEditing]=useState(false);
+ const cancelEdit=useRef(false);const shift=useRef(false);const initial=useRef<{x:number;value:number}|null>(null);
+ useEffect(()=>{if(!editing)setDraft(String(Number.isFinite(value)?Number(value.toFixed(4)):0))},[value,editing]);
+ const legal=/^-?(?:\d+(?:\.\d*)?|\.\d*)?$/;
+ const submit=()=>{if(cancelEdit.current){cancelEdit.current=false;setEditing(false);setDraft(String(value));return}const n=Number(draft);setEditing(false);if(draft.trim()&&Number.isFinite(n))onChange(n);else setDraft(String(value))};
+ const clamp=(n:number)=>Math.min(max,Math.max(min,n));
+ const onStart=(e:React.PointerEvent<HTMLInputElement>)=>{shift.current=e.shiftKey;initial.current={x:e.clientX,value};onGestureStart?.();};
+ const onRange=(e:React.ChangeEvent<HTMLInputElement>)=>{const n=Number(e.target.value);if(!Number.isFinite(n))return;const next=shift.current?value+(n-value)*.12:n;onChange(clamp(next))};
+ return <div className="pro-slider-row"><label title={label} className="pro-slider-label">{label}</label><div className="pro-slider-track"><input className="engraved-volume pro-slider" aria-label={`${label} slider`} type="range" min={min} max={max} step={step} value={clamp(Number.isFinite(value)?value:0)} disabled={disabled} onPointerDown={onStart} onPointerUp={()=>{initial.current=null;shift.current=false;onGestureEnd?.()}} onPointerCancel={()=>{initial.current=null;shift.current=false;onGestureEnd?.()}} onChange={onRange} onDoubleClick={()=>onChange(defaultValue??min)} title={`Double-click to reset • Shift to adjust finely • ${value}${unit}`}/></div><input className="pro-slider-number" aria-label={`${label} value`} inputMode="decimal" value={draft} disabled={disabled} onFocus={()=>setEditing(true)} onChange={e=>{if(legal.test(e.target.value))setDraft(e.target.value)}} onBlur={submit} onKeyDown={e=>{if(e.key==='Enter')e.currentTarget.blur();if(e.key==='Escape'){cancelEdit.current=true;setDraft(String(value));e.currentTarget.blur()}}}/><small className="pro-slider-unit">{unit}</small></div>
+}

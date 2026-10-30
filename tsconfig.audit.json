@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [
+    "src/types.ts",
+    "src/engine/timeline.ts",
+    "src/engine/masks.ts",
+    "src/engine/motionPresets.ts",
+    "src/engine/layers.ts",
+    "src/engine/snapping.ts"
+  ]
+}

@@ -1,0 +1,26 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),ts=(()=>{try{return require('typescript')}catch{return require('/opt/nvm/versions/node/v22.16.0/lib/node_modules/typescript')}})();
+require.extensions['.ts']=(module,file)=>{const js=ts.transpileModule(fs.readFileSync(file,'utf8'),{fileName:file,compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;module._compile(js,file)};
+const {makeClip,newProject}=require('../src/types.ts');
+const {evaluate,sourceTime,splitClip,rippleDelete}=require('../src/engine/timeline.ts');
+const {motionCatalog,createMotionKeys,initialMotionOptions}=require('../src/engine/motionPresets.ts');
+const {applyPixelEffect}=require('../src/engine/pixelEffects.ts');
+const {peaksFromPCM}=require('../src/engine/waveform.ts');
+const {maskPointsAt,startMaskAnimation,setMaskAt}=require('../src/engine/masks.ts');
+let checks=0;const check=(condition,label)=>{assert(condition,label);checks++};
+const p=newProject(),clip=makeClip('text','V1',10);clip.duration=120;clip.text='hello world';
+const allowed=new Set(['typewriter']);
+for(const m of motionCatalog){const c=createMotionKeys(clip,p,10,m.id,{...initialMotionOptions,duration:24});
+ check(c.keyframes&&Object.values(c.keyframes).some(k=>k.length>=2),`Motion ${m.id} did not create editable keys`);
+ for(const keys of Object.values(c.keyframes))for(const k of keys)check(k.frame>=0&&k.frame<clip.duration,`Motion ${m.id} outside duration`);
+}
+const typed=createMotionKeys(clip,p,10,'typewriter',initialMotionOptions);check(evaluate(typed.keyframes.reveal,11,0)===0,'typewriter begins hidden');check(evaluate(typed.keyframes.reveal,11,24)===11,'typewriter ends revealed');
+const pix=new Uint8ClampedArray([110,100,90,255,180,170,160,255,80,70,60,255,200,190,180,255]);
+applyPixelEffect(pix,2,2,{id:'x',type:'threshold',amount:50,enabled:true});check(pix[0]===0&&pix[4]===255,'threshold pixels modified');
+const rgb=new Uint8ClampedArray([240,0,0,255,0,0,200,255]);applyPixelEffect(rgb,2,1,{id:'x',type:'rgbSplit',amount:1,enabled:true});check(rgb[0]===0,'channel shifted');
+const w=peaksFromPCM([Float32Array.from([0,.2,.8,-.4])],2);check(Math.abs(w[0]-.2)<.001&&Math.abs(w[1]-.8)<.001,'PCM peak extraction');
+const mask=makeClip('solid','V1',0);mask.mask='polygon';mask.maskPoints=[[-1,-1],[0,-1],[0,1],[-1,1]];Object.assign(mask,startMaskAnimation(mask,0));Object.assign(mask,setMaskAt(mask,10,[[0,-1],[1,-1],[1,1],[0,1]]));
+check(Math.abs(maskPointsAt(mask,5)[0][0]+.5)<.001,'animated mask interpolates');
+const q=newProject();q.clips=[mask];mask.duration=30;const split=splitClip(q,mask.id,10);check(split.clips[0].maskKeyframes.length===2&&split.clips[1].maskKeyframes[0].frame===0,'animated mask split');
+q.clips=[makeClip('video','V1',0),makeClip('video','V1',150),makeClip('video','V2',150)];q.clips[0].duration=100;
+const next=rippleDelete(q,q.clips[0].id);check(next.clips.length===2&&next.clips[0].start===50&&next.clips[1].start===150,'ripple only same track');
+console.log(`PASS: ${checks} motion/effect/mask/waveform/ripple assertions`);
